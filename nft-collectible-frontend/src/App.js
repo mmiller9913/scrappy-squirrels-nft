@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import contractABI from './utils/NFTCollectible.json';
 import Me from './assets/Me.jpg';
 import NFT from './assets/preview-nft.png';
-import LoadingIndicator from './components/LoadingIndicator.js';
+// import LoadingIndicator from './components/LoadingIndicator.js';
 
 const contractAddress = '0x6Ee2d7619eBbADfeb006Ee0bdf69785C1Ce07c24'
 const abi = contractABI.abi;

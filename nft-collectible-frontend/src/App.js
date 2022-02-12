@@ -5,9 +5,13 @@ import { ethers } from 'ethers';
 import contractABI from './utils/NFTCollectible.json';
 import Me from './assets/Me.jpg';
 import NFT from './assets/preview-nft.png';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import LoadingIndicator from './components/LoadingIndicator.js';
 
-const contractAddress = '0x6Ee2d7619eBbADfeb006Ee0bdf69785C1Ce07c24'
+// //old
+// const contractAddress = '0x6Ee2d7619eBbADfeb006Ee0bdf69785C1Ce07c24';
+const contractAddress = '0xFCA2bc35129e16500C22e7094B7c671F3aE9F916';
 const abi = contractABI.abi;
 const RARIBLE_LINK = `https://rinkeby.rarible.com/collection/${contractAddress}/items`;
 
@@ -23,6 +27,15 @@ function App() {
 
       if (!ethereum) {
         console.log("Make sure you have Metamask installed!");
+        toast.warn("Make sure you have MetaMask installed", {
+          position: "top-left",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         return;
       } else {
         console.log("We have the ethereum object", ethereum);
@@ -42,6 +55,15 @@ function App() {
           const account = accounts[0];
           console.log('Found an authorized account:', account);
           setCurrentAccount(account);
+          toast.success("🦄 Wallet is Connected", {
+            position: "top-left",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         } else {
           console.log('No authorized account found');
         }
@@ -80,8 +102,26 @@ function App() {
         console.log("Going to pop wallet now to pay gas...")
         let nftTxn = await nftContract.mintNFTs(1, { value: ethers.utils.parseEther('0.01') });
         console.log("Minting... please wait")
+        toast.info("Minting NFT...", {
+          position: "top-left",
+          autoClose: 6050,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         await nftTxn.wait();
         console.log('NFT minted');
+        // toast.success("NFT Minted!", {
+        //   position: "top-left",
+        //   autoClose: 2000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
         setIsMintingNFT(false);
       } else {
         console.log('Ethereum object does not exist');
@@ -142,7 +182,7 @@ function App() {
   const renderButtonOrRinkebyWarning = () => {
     if (!currentAccount) {
       return (
-        <button onClick={connectWalletHandler} className='cta-button'>
+        <button onClick={connectWalletHandler}>
           Connect Wallet
         </button>
       )
@@ -150,8 +190,9 @@ function App() {
 
     if (currentAccount && network === "Rinkeby") {
       return (
-        <button disabled={isMintingNFT} onClick={mintNftHandler} className='cta-button'>
+        <button disabled={isMintingNFT} onClick={mintNftHandler} className={isMintingNFT? 'accomodate-for-loader' : ''} >
           {!isMintingNFT ? 'Mint NFT' : 'Minting.... Please confirm the transaction.'}
+          {renderLoader()}
         </button>
       )
     }
@@ -184,9 +225,16 @@ function App() {
           e.preventDefault();
           window.location.href = RARIBLE_LINK;
         }}
-        className="cta-button connect-wallet-button"
       >🌊 Check out the collection on Rarible</button>
     )
+  }
+
+  const renderTestEthMessage = () => {
+    if (currentAccount && network === "Rinkeby") {
+      return <p className="test-eth">
+        If you need test ETH, try using <a href="https://faucets.chain.link/rinkeby">this faucet</a>.
+      </p>
+    }
   }
 
   return (
@@ -198,7 +246,8 @@ function App() {
             🌰 A generative art NFT collection on the Ethereum blockchain 🌰
           </p>
           {renderButtonOrRinkebyWarning()}
-          {renderLoader()}
+          {renderTestEthMessage()}
+          {/* {renderLoader()} */}
           {renderPreviewNFT()}
           {renderOpenSeaButton()}
         </div>
@@ -210,6 +259,17 @@ function App() {
           ><img alt="My avatar" className="my-avatar" src={Me} /><p>Built By Matt</p></a>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   )
 }

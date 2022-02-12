@@ -34,17 +34,7 @@
   color: white;
 }
 
-/* .cta-button {
-  padding: 15px;
-  border: none;
-  border-radius: 12px;
-  min-width: 250px;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-} */
-
-.cta-button {
+button {
   height: 45px;
   border: 0;
   width: auto;
@@ -55,17 +45,24 @@
   color: white;
   border-radius: 9999px;
   font-size: 16px;
-  /* background-color: #a200d6;
-  background: rgb(32, 129, 226); */
   background: -webkit-linear-gradient(left, #60c657, #35aee2);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
+  /* for loader within button */
+  display: flex;
+  align-items: center;
 }
 
-.cta-button:hover {
+/* for loader within button */
+.accomodate-for-loader {
+  padding-right: 50px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+button:hover {
   filter: brightness(115%);
 }
-
 
 .rinkeby-only {
   font-size: 15px;
@@ -74,21 +71,40 @@
   text-align: center;
 }
 
-.rinkeby-only> a {
+.rinkeby-only>a {
+  color: white;
+  text-decoration: underline;
+}
+
+.test-eth {
+  font-size: 15px;
+  color: white;
+  margin: 25px;
+}
+
+.test-eth>a {
   color: white;
   text-decoration: underline;
 }
 
 .preview-nft {
-  margin-top: 70px;
+  margin-top: 50px;
   margin-bottom: 70px;
-} 
+}
 
 /*loader*/
-.lds-spinner {
+/* below button */
+/* .lds-spinner {
   width: 80px;
   height: 80px;
   margin-top: 50px;
+} */
+/* within button */
+.lds-spinner {
+  width: 20px;
+  height: 20px;
+  margin-left: -13px;
+  margin-top: -60px;
 }
 
 .lds-spinner div {
@@ -96,7 +112,8 @@
   animation: lds-spinner 1.2s linear infinite;
 }
 
-.lds-spinner div:after {
+/* not in button, below button */
+/* .lds-spinner div:after {
   content: " ";
   display: block;
   position: absolute;
@@ -106,6 +123,18 @@
   height: 18px;
   border-radius: 20%;
   background: #fff;
+} */
+/* when within button */
+.lds-spinner div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 25px;
+  left: 37px;
+  width: 2px; 
+  height: 10px;
+  border-radius: 20%;
+  background: rgb(255, 255, 255);
 }
 
 .lds-spinner div:nth-child(1) {
@@ -178,7 +207,7 @@
   }
 }
 
-.footer-container > a {
+.footer-container>a {
   color: white;
   display: flex;
   justify-content: center;

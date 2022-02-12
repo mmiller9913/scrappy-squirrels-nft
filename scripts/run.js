@@ -16,7 +16,6 @@ async function main() {
     // Get contract that we want to deploy
     const contractFactory = await hre.ethers.getContractFactory("NFTCollectible");
 
-
     // Deploy contract with the correct constructor arguments
     const contract = await contractFactory.deploy(baseTokenURI);
 
